@@ -1,18 +1,21 @@
-import type { Config } from "tailwindcss";
-
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: 'class', // Enable dark mode via a class on the html element
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
+      // Optionally add custom colors – for an elegant scheme, you might add a gold color:
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+        gold: {
+          DEFAULT: '#FFC107',
+          400: '#FFCA28',
+          500: '#FFB300'
+        }
+      }
     },
   },
   plugins: [],
-} satisfies Config;
+};
