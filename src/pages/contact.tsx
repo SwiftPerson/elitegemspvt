@@ -19,10 +19,10 @@ const Contact: NextPage = () => {
           <div className="md:w-1/2">
             {/* Replace YOUR_EMBED_CODE with your actual Google Maps embed code */}
             <iframe
-              title="Google Maps"
-              src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
+              title="Google Maps - Elite Gems Private Limited"
+              src="https://www.google.com/maps?q=34.004689,71.565888&hl=en&z=15&output=embed"
               width="100%"
-              height="450"
+              height="300"
               className="border-0 rounded"
               allowFullScreen
               loading="lazy"
@@ -31,7 +31,7 @@ const Contact: NextPage = () => {
           </div>
           <div className="md:w-1/2">
             <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-md">
-              <p className="mb-4">{t('contactContent')}</p>
+              <p className="mb-4">{t('contactAddress')}</p>
               <p>
                 Email:{" "}
                 <a
