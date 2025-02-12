@@ -1,3 +1,4 @@
+// src/components/AboutSection.tsx
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -15,13 +16,16 @@ const AboutSection: React.FC = () => {
       transition={{ duration: 0.8 }}
     >
       <div className="container mx-auto px-4">
+        {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold dark:text-white">{t('aboutTitle')}</h2>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
             {t('aboutSubtitle')}
           </p>
         </div>
+        {/* Split Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Left Column: Rich Text Content */}
           <div className="space-y-6 dark:text-white">
             <p className="text-lg">{t('aboutContent1')}</p>
             <p className="text-lg">{t('aboutContent2')}</p>
@@ -33,14 +37,16 @@ const AboutSection: React.FC = () => {
               >
                 {t('learnMoreButton')}
               </a>
+              {/* Update the "Get in Touch" button to scroll to #contact */}
               <a
-                href="/contact"
+                href="#contact"
                 className="px-6 py-3 bg-gray-800 dark:bg-gray-700 text-white font-semibold rounded-full shadow hover:bg-gray-600 transition transform hover:scale-105"
               >
                 {t('getInTouchButton')}
               </a>
             </div>
           </div>
+          {/* Right Column: Image with Decorative Overlay */}
           <div className="relative">
             <img
               src="/images/about.png"

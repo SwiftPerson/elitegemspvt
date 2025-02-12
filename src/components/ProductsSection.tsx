@@ -1,75 +1,146 @@
-import React from 'react';
+import React, { JSX, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { FiDownload } from 'react-icons/fi';
-import { motion } from 'framer-motion';
+// Import a variety of icons:
+import { GiDiamondRing, GiStoneBlock, GiDiamondHard } from 'react-icons/gi';
+import { FaRing, FaGem, FaDotCircle } from 'react-icons/fa';
 
 interface Product {
   id: number;
-  key: string;
-  image: string;
+  titleKey: string;
+  shortDescriptionKey: string;
+  longDescriptionKey: string;
+  icon: JSX.Element;
 }
 
 const products: Product[] = [
-  { id: 1, key: 'product1Title', image: '/images/necklace.jpeg' },       // Gemstone Necklaces
-  { id: 2, key: 'product2Title', image: '/images/pendant.jpeg' },         // Gemstone Pendants
-  { id: 3, key: 'product3Title', image: '/images/loose-gemstones.jpeg' },  // Loose Gemstones
-  { id: 4, key: 'product4Title', image: '/images/manufacturing.jpeg' },     // Custom Orders
-  { id: 5, key: 'product5Title', image: '/images/bangles.jpeg' },          // Bangles
-  { id: 6, key: 'product6Title', image: '/images/bracelets.jpeg' },        // Bracelets
-  { id: 7, key: 'product7Title', image: '/images/specimens.jpeg' },         // Specimens
-  { id: 8, key: 'product8Title', image: '/images/necklace-beads.jpeg' },    // Necklace Beads
-  { id: 9, key: 'product9Title', image: '/images/rosary.jpeg' },            // Rosary
+  {
+    id: 1,
+    titleKey: 'product1Title',
+    shortDescriptionKey: 'product1ShortDesc',
+    longDescriptionKey: 'product1LongDesc',
+    // Diamond Quartz Necklaces
+    icon: <GiDiamondRing size={60} className="text-[#e1ba66]" />,
+  },
+  {
+    id: 2,
+    titleKey: 'product2Title',
+    shortDescriptionKey: 'product2ShortDesc',
+    longDescriptionKey: 'product2LongDesc',
+    // Loose Diamond Quartz
+    icon: <GiStoneBlock size={60} className="text-[#e1ba66]" />,
+  },
+  {
+    id: 3,
+    titleKey: 'product3Title',
+    shortDescriptionKey: 'product3ShortDesc',
+    longDescriptionKey: 'product3LongDesc',
+    // Bracelets
+    icon: <FaRing size={60} className="text-[#e1ba66]" />,
+  },
+  {
+    id: 4,
+    titleKey: 'product4Title',
+    shortDescriptionKey: 'product4ShortDesc',
+    longDescriptionKey: 'product4LongDesc',
+    // Pendants
+    icon: <FaGem size={60} className="text-[#e1ba66]" />,
+  },
+  {
+    id: 5,
+    titleKey: 'product5Title',
+    shortDescriptionKey: 'product5ShortDesc',
+    longDescriptionKey: 'product5LongDesc',
+    // Bangles
+    icon: <GiDiamondHard size={60} className="text-[#e1ba66]" />,
+  },
+  {
+    id: 6,
+    titleKey: 'product6Title',
+    shortDescriptionKey: 'product6ShortDesc',
+    longDescriptionKey: 'product6LongDesc',
+    // Necklace Beads
+    icon: <FaDotCircle size={60} className="text-[#e1ba66]" />,
+  },
 ];
 
 const ProductsSection: React.FC = () => {
   const { t } = useTranslation();
+  const [expandedProductId, setExpandedProductId] = useState<number | null>(null);
+
+  const toggleExpand = (id: number) => {
+    setExpandedProductId(expandedProductId === id ? null : id);
+  };
+
   return (
-    <motion.section
-      id="products"
-      className="py-20 bg-gray-50 dark:bg-gray-800"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8 }}
-    >
+    <section id="products" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-12 dark:text-white">
-          {t('productsTitle')}
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {products.map(product => (
-            <div
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl font-bold dark:text-white">
+            {t('productsSectionTitle')}
+          </h2>
+          <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">
+            {t('productsSectionSubtitle')}
+          </p>
+        </motion.div>
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {products.map((product) => (
+            <motion.div
               key={product.id}
-              className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+              className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden"
             >
-              <img
-                src={product.image}
-                alt={t(product.key)}
-                className="w-full h-56 object-cover"
-                loading="lazy"
-              />
-              <div className="p-4 text-center">
-                <h3 className="text-xl font-semibold dark:text-white">
-                  {t(product.key)}
-                </h3>
+              <div className="flex items-center gap-4 p-6">
+                {product.icon}
+                <div>
+                  <h3 className="text-3xl font-semibold dark:text-white">
+                    {t(product.titleKey)}
+                  </h3>
+                  <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
+                    {t(product.shortDescriptionKey)}
+                  </p>
+                </div>
               </div>
-            </div>
+              <div className="px-6 pb-6">
+                <button
+                  onClick={() => toggleExpand(product.id)}
+                  className="inline-block px-8 py-4 bg-gradient-to-r from-[#e1ba66] to-yellow-400 text-black font-bold text-lg rounded-full shadow-lg transition transform hover:scale-105"
+                >
+                  {expandedProductId === product.id
+                    ? t('viewLess')
+                    : t('viewMore')}
+                </button>
+                <AnimatePresence>
+                  {expandedProductId === product.id && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="mt-6 text-gray-700 dark:text-gray-200"
+                    >
+                      {t(product.longDescriptionKey)}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
           ))}
         </div>
-        <div className="mt-12 flex justify-center">
-          <a
-            href="/catalog.pdf"
-            download
-            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#e1ba66] to-yellow-400 text-black font-bold text-lg rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-2xl"
-          >
-            <FiDownload size={24} className="mr-2" />
-            {t('downloadCatalogButton')}
-          </a>
-        </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
-
 
 export default ProductsSection;

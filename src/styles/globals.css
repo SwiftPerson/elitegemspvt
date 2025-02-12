@@ -9,9 +9,13 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Ensure that when dark mode is active (i.e. html.dark is set), background and text colors are as desired */
 html.dark {
-  background-color: #1a1a1a;
+  background-color: #1f2937 ;
   color: white;
 }
 
