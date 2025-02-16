@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
         {/* Social Media & Marketplace Icons */}
         <div className="flex flex-wrap justify-center space-x-6 mb-6">
           <a
-            href="https://facebook.com"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
             <FaFacebookF size={28} />
           </a>
           <a
-            href="https://instagram.com"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
             <FaInstagram size={28} />
           </a>
           <a
-            href="https://twitter.com"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
             <FaTwitter size={28} />
           </a>
           <a
-            href="https://etsy.com"
+            href="https://elitegemsprivate.etsy.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
             <FaEtsy size={28} />
           </a>
           <a
-            href="https://ebay.com"
+            href="https://ebay.com/usr/elitegems_pvt"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
             <FaEbay size={28} />
           </a>
           <a
-            href="https://shopify.com"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-white dark:hover:text-black transition duration-300"
