@@ -10,14 +10,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
      <Head>
-  {/* Primary Meta Tags */}
+     <link rel="icon" href="/favicon.ico" />
   <title>Elite Gems Private Limited | Premium Gemstones Worldwide</title>
   <meta 
     name="description" 
     content="Elite Gems Private Limited: Trusted global exporter of authentic  gemstones like Emeralds, Rubies, Sapphires & Topaz. Certified quality, ethical sourcing, and worldwide shipping." 
   />
 
-  {/* Open Graph (Facebook/LinkedIn) */}
   <meta property="og:title" content="Elite Gems Private Limited | Premium Gemstones Worldwide" />
   <meta property="og:image" content="/og-global-gemstones.jpg" />
 
