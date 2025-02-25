@@ -38,7 +38,7 @@ const Header: React.FC = () => {
     >
       <div className="container mx-auto flex justify-between items-center px-4">
         {/* Logo */}
-        <a href="#hero" onClick={() => setMobileMenuOpen(false)}>
+        <a href="/" onClick={() => setMobileMenuOpen(false)}>
           <img
             src="/images/logo.png"
             alt="Elite Gems Logo"
