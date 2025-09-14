@@ -72,6 +72,20 @@ const resources = {
       viewMore: "View More",
       viewLess: "View Less",
 
+      // new/utility keys
+      enquire: "Enquire",
+      generating: "Generating…",
+      catalogError: "Could not generate catalog. Please try again later.",
+      followUs: "Quick Links",
+      privacy: "Privacy Policy",
+      terms: "Terms & Conditions",
+      newsletterTitle: "Newsletter",
+      newsletterPlaceholder: "you@example.com",
+      subscribe: "Subscribe",
+      backToTop: "Top",
+      footerTextSimple: "Quality gemstones • Ethical sourcing • Worldwide shipping",
+      newsletterEnterEmail: "Please enter your email to subscribe.",
+      toggleTheme: "Toggle theme",
 
       contactTitle: "Contact Us",
       contactAddress: "Shop #20, MC Plaza, Namak Mandi, Peshawar, Pakistan",
@@ -184,13 +198,29 @@ const resources = {
       viewMore: "了解更多",
       viewLess: "收起",
 
+      // new/utility keys (zh)
+      enquire: "咨询",
+      generating: "正在生成…",
+      catalogError: "无法生成目录。请稍后再试。",
+      followUs: "快捷链接",
+      privacy: "隐私政策",
+      terms: "条款与条件",
+      newsletterTitle: "新闻订阅",
+      newsletterPlaceholder: "you@example.com",
+      subscribe: "订阅",
+      backToTop: "回到顶部",
+      footerTextSimple: "优质宝石 • 伦理采购 • 全球配送",
+      newsletterEnterEmail: "请输入您的电子邮件以订阅。",
+      toggleTheme: "切换主题",
+
       contactTitle: "联系我们",
       contactAddress: "巴基斯坦白沙瓦 Namak Mandi, MC Plaza 20号店",
       contactEmail: "elitegems@protonmail.com",
       contactPhone: "+92 333 9134320",
       Address:"地址",
-      footerText: "© {{year}} Elite Gems. 版权所有。",
+      footerText: "© {{year}} Elite Gems。版权所有。",
       footerRights: "版权所有。",
+
       downloadCatalogButton: "下载目录",
       contactMessage:"如有任何疑问或订单，请随时与我们联系",
       galleryTitle: "画廊",
@@ -223,7 +253,7 @@ const resources = {
       priceReply: "我们的价格具有竞争力。请直接联系我们了解更多详情。",
       locationReply: "您可以在Peshawar Namak Mandi的MC Plaza 20号找到我们。",
       contactReply: "请随时通过WhatsApp、微信联系我们或访问我们的店铺。",
-      },
+    },
   },
 };
 
@@ -231,7 +261,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: typeof window !== 'undefined' ? localStorage.getItem('language') || 'en' : 'en',
+    lng: typeof window !== 'undefined' ? (localStorage.getItem('language') as string) || 'en' : 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

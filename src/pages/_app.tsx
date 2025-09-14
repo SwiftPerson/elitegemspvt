@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   />
 
   <meta property="og:title" content="Elite Gems Private Limited | Premium Gemstones Worldwide" />
-  <meta property="og:image" content="/og-global-gemstones.jpg" />
+  <meta property="og:image" content="/og-global-gemstones.jpeg" />
 
 </Head>
       

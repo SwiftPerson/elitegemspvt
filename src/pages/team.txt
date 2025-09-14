@@ -21,7 +21,7 @@
               whileHover={{ scale: 1.03 }}
             >
               <img
-                src="/images/team-member1.jpg"
+                src="/images/team-member1.jpeg"
                 alt="Team Member 1"
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />
@@ -34,7 +34,7 @@
               whileHover={{ scale: 1.03 }}
             >
               <img
-                src="/images/team-member2.jpg"
+                src="/images/team-member2.jpeg"
                 alt="Team Member 2"
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />
@@ -47,7 +47,7 @@
               whileHover={{ scale: 1.03 }}
             >
               <img
-                src="/images/team-member3.jpg"
+                src="/images/team-member3.jpeg"
                 alt="Team Member 3"
                 className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
               />

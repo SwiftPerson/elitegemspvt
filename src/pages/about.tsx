@@ -22,7 +22,7 @@ const About: NextPage = () => {
       <motion.section
         id="about-hero"
         className="relative h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/about-hero.jpeg')" }}
+        style={{ backgroundImage: "url('/images/about-hero..jpeg')" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
