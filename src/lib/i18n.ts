@@ -19,7 +19,7 @@ const resources = {
       aboutContent1: "Elite Gems is more than just a gemstone store. With decades of experience in sourcing, crafting, and delivering exquisite gemstone jewelry, our journey has been defined by quality, innovation, and an unwavering passion for excellence.",
       aboutContent2: "Located at Shop #20, MC Plaza, Namak Mandi, Peshawar, Pakistan, we connect our clients with both precious and semi-precious gemstones. Every piece we create is a testament to our commitment to craftsmanship and timeless elegance.",
       aboutContent3: "Our team of expert artisans and gemologists work tirelessly to ensure that every facet, drilling, and design meets the highest standards. Whether you are seeking a bespoke jewelry piece or a stunning loose gemstone, Elite Gems is dedicated to providing unparalleled service and exceptional quality.",
-      
+
       aboutTitlePage: "About Elite Gems",
       aboutMetaDescription: "Learn about Elite Gems – our story, our mission, and our passionate team.",
       aboutTagline: "Where passion meets precision in gemstone craftsmanship",
@@ -30,7 +30,7 @@ const resources = {
       ourMissionContent: "We are dedicated to creating exquisite gemstone jewelry that celebrates individuality and timeless elegance. Our mission is to inspire and empower our customers through artful craftsmanship.",
       ourTeamTitle: "Our Team",
       ourTeamContent: "Our team of master artisans, skilled gemologists, and visionary designers work together to create pieces that are both unique and luxurious.",
-      
+
       learnMoreButton: "Learn More",
       getInTouchButton: "Get in Touch",
       servicesTitle: "Our Services",
@@ -91,12 +91,12 @@ const resources = {
       contactAddress: "Shop #20, MC Plaza, Namak Mandi, Peshawar, Pakistan",
       contactEmail: "elitegems@protonmail.com",
       contactPhone: "+92 333 9134320",
-      Address:"Address",
+      Address: "Address",
       footerText: "© {{year}} Elite Gems. All Rights Reserved.",
       footerRights: "All rights reserved.",
 
       downloadCatalogButton: "Download Catalog",
-      contactMessage:"Feel free to reach out to us for any inquiries or orders",
+      contactMessage: "Feel free to reach out to us for any inquiries or orders",
       galleryTitle: "Gallery",
       gallerySubtitle: "Explore our stunning collection of diamond quartz jewelry.",
       galleryItem1Caption: "Diamond Quartz Necklaces",
@@ -146,7 +146,7 @@ const resources = {
       aboutContent1: "Elite Gems 不仅仅是一家宝石店。凭借在采购、制作和提供精美宝石首饰方面数十年的经验，我们的旅程以质量、创新以及对卓越的不懈追求为标志。",
       aboutContent2: "位于巴基斯坦白沙瓦 Namak Mandi 的 MC Plaza 20号店，我们将客户与各种珍贵和半珍贵的宝石连接起来。我们打造的每一件作品都见证了我们对工艺和永恒优雅的承诺。",
       aboutContent3: "我们的专业工匠和宝石学家团队不懈努力，确保每个切面、钻孔和设计都达到最高标准。无论您是在寻找定制首饰还是惊艳的裸石，Elite Gems 都致力于提供无与伦比的服务和卓越品质。",
-      
+
       aboutTitlePage: "关于 Elite Gems",
       aboutMetaDescription: "了解 Elite Gems —— 我们的故事、我们的使命以及我们充满热情的团队。",
       aboutTagline: "在宝石工艺中，激情与精准的交汇",
@@ -157,7 +157,7 @@ const resources = {
       ourMissionContent: "我们致力于打造精美绝伦的宝石首饰，彰显个性与永恒的优雅。我们的使命是通过精湛工艺启发和赋能客户。",
       ourTeamTitle: "我们的团队",
       ourTeamContent: "我们的团队由资深工匠、宝石专家和富有远见的设计师组成，共同打造独特而奢华的艺术品。",
-      
+
       learnMoreButton: "了解更多",
       getInTouchButton: "联系我们",
       servicesTitle: "我们的服务",
@@ -217,12 +217,12 @@ const resources = {
       contactAddress: "巴基斯坦白沙瓦 Namak Mandi, MC Plaza 20号店",
       contactEmail: "elitegems@protonmail.com",
       contactPhone: "+92 333 9134320",
-      Address:"地址",
+      Address: "地址",
       footerText: "© {{year}} Elite Gems。版权所有。",
       footerRights: "版权所有。",
 
       downloadCatalogButton: "下载目录",
-      contactMessage:"如有任何疑问或订单，请随时与我们联系",
+      contactMessage: "如有任何疑问或订单，请随时与我们联系",
       galleryTitle: "画廊",
       gallerySubtitle: "浏览我们令人惊叹的钻石石英珠宝系列。",
       galleryItem1Caption: "钻石石英项链",
@@ -261,7 +261,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: typeof window !== 'undefined' ? (localStorage.getItem('language') as string) || 'en' : 'en',
+    lng: 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,

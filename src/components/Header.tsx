@@ -23,8 +23,15 @@ const Header: React.FC = () => {
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Restore language preference
+    const savedLang = localStorage.getItem('language');
+    if (savedLang && savedLang !== i18n.language) {
+      i18n.changeLanguage(savedLang);
+    }
+
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [i18n]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
