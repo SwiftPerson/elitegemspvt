@@ -37,7 +37,7 @@ export const services: ServiceData[] = [
         id: 'faceting',
         title: 'Gemstone Faceting',
         description: 'Expert faceting to maximize light return and color purity following precise geometric patterns.',
-        details: 'Our master faceters use precision machinery to cut gemstones into standard or custom designs (Brilliant, Emerald, Radiant, etc.), optimized for the specific refractive index of each mineral.',
+        details: 'Our master faceters use precision machinery to cut gemstones into standard or custom designs, optimized for the specific refractive index of each mineral.',
         accentColor: '#ef4444',
     },
 ];
