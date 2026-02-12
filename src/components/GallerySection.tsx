@@ -1,26 +1,120 @@
-// src/components/GallerySection.tsx
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { gemCategories, getProductsByCategory } from '../data/gemstones';
 
 const GallerySection: React.FC = () => {
   const { t } = useTranslation();
-  const thumbs = ['/images/gallery1.jpeg', '/images/gallery2.jpeg', '/images/gallery3.jpeg', '/images/gallery4.jpeg'];
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const items = useMemo(() => getProductsByCategory(activeCategory), [activeCategory]);
+  const categories = gemCategories;
+
+  // Assign varied grid spans for masonry look
+  const getSpan = (index: number): string => {
+    const patterns = [
+      'md:col-span-2 md:row-span-2',
+      '',
+      '',
+      'md:col-span-2',
+      '',
+      '',
+    ];
+    return patterns[index % patterns.length];
+  };
 
   return (
-    <section id="gallery" className="py-16">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold">{t('galleryTitle')}</h3>
-          <p className="text-gray-600">{t('gallerySubtitle')}</p>
+    <section id="gallery" className="relative py-24 md:py-32 bg-section-alt overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-sapphire-gem/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="text-xs tracking-[0.3em] uppercase text-gold/60 font-medium">Showcase</span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 mb-4 gold-gradient-text">
+            {t('galleryTitle')}
+          </h2>
+          <div className="section-divider mb-6" />
+          <p className="text-adaptive-secondary max-w-lg mx-auto">{t('gallerySubtitle')}</p>
+        </motion.div>
+
+        {/* Category Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {categories.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                activeCategory === cat.id
+                  ? 'border-gold/40 bg-gold/10 text-gold shadow-gold/10 shadow-md'
+                  : 'border-adaptive-border bg-adaptive-glass text-adaptive-secondary hover:border-gold/20 hover:text-gold'
+              }`}
+            >
+              <span
+                className="inline-block w-2 h-2 rounded-full mr-2"
+                style={{ backgroundColor: cat.color }}
+              />
+              {cat.name}
+            </button>
+          ))}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {thumbs.map((src, i) => (
-            <motion.div key={i} whileHover={{ scale: 1.03 }} className="rounded-lg overflow-hidden shadow">
-              <img src={src} alt={`gallery-${i}`} className="w-full h-40 object-cover" loading="lazy" />
+        {/* Masonry Grid */}
+        <div className="max-w-6xl mx-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[180px] md:auto-rows-[220px]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+            >
+              {items.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  className={`group relative rounded-xl overflow-hidden cursor-pointer ${getSpan(i)}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+
+                  {/* Dark overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-gem-dark/90 via-gem-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+
+                  {/* Caption */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="glass-card px-4 py-3">
+                      <p className="text-sm font-medium text-white">{item.name}</p>
+                      <p className="text-xs text-white/50 mt-1">{item.type}</p>
+                    </div>
+                  </div>
+
+                  {/* Border glow */}
+                  <div className="absolute inset-0 rounded-xl border border-gold/0 group-hover:border-gold/20 transition-all duration-500" />
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
+          </AnimatePresence>
+
+          {items.length === 0 && (
+            <div className="text-center py-16 text-adaptive-secondary">
+              <p className="font-display text-lg">No items in this category yet.</p>
+            </div>
+          )}
         </div>
       </div>
     </section>

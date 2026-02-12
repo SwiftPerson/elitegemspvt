@@ -1,4 +1,3 @@
-// src/context/ThemeContext.tsx
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 
 interface ThemeContextProps {
@@ -18,11 +17,24 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
+  const applyTheme = (t: 'light' | 'dark') => {
+    const html = document.documentElement;
+    if (t === 'dark') {
+      html.classList.add('dark');
+      html.classList.remove('light');
+    } else {
+      html.classList.add('light');
+      html.classList.remove('dark');
+    }
+  };
+
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
     if (storedTheme) {
       setTheme(storedTheme);
-      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+      applyTheme(storedTheme);
+    } else {
+      applyTheme('dark');
     }
   }, []);
 
@@ -30,7 +42,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    applyTheme(newTheme);
   };
 
   return (

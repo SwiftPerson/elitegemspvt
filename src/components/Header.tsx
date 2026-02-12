@@ -1,10 +1,10 @@
-// src/components/Header.tsx
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
 import { AiOutlineGlobal, AiOutlineDownload } from 'react-icons/ai';
 import { useTheme } from '../hooks/useTheme';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const LANGS = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
@@ -21,13 +21,11 @@ const Header: React.FC = () => {
   const langRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // shrink on scroll
     const onScroll = () => setIsScrolled(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // close language menu on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
@@ -64,50 +62,65 @@ const Header: React.FC = () => {
     }
   };
 
+  const navLinks = [
+    { href: '#hero', label: t('navHome') },
+    { href: '#about', label: t('navAbout') },
+    { href: '#services', label: t('navServices') },
+    { href: '#products', label: t('navProducts') },
+    { href: '#gallery', label: 'Gallery' },
+    { href: '#contact', label: t('navContact') },
+  ];
+
   return (
     <header
       role="banner"
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-2 backdrop-blur bg-white/70 dark:bg-gray-900/70 shadow-md' : 'py-4 bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? 'py-2 backdrop-blur-xl bg-gem-dark/80 border-b border-white/5 shadow-lg shadow-black/20'
+          : 'py-4 bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         {/* Logo & brand */}
-        <Link href="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
+        <Link href="/" className="flex items-center gap-3 group" onClick={() => setMobileOpen(false)}>
           <img
             src="/images/logo.png"
             alt={t('siteTitle') || 'Elite Gems'}
-            className={`object-contain transition-all ${isScrolled ? 'h-10' : 'h-16'}`}
+            className={`object-contain transition-all duration-500 ${isScrolled ? 'h-9' : 'h-14'}`}
             loading="eager"
-            width={64}
-            height={64}
+            width={56}
+            height={56}
           />
           <div className="hidden sm:block">
-            <div className="text-sm font-bold leading-tight">Elite Gems</div>
-            <div className="text-xs text-gray-500">Exquisite Gemstone Jewelry</div>
+            <div className="font-display text-lg font-bold leading-tight gold-gradient-text">Elite Gems</div>
+            <div className="text-[11px] tracking-[0.15em] uppercase text-white/40">Private Limited</div>
           </div>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <a href="#hero" className="hover:text-[#e1ba66]">{t('navHome')}</a>
-          <a href="#about" className="hover:text-[#e1ba66]">{t('navAbout')}</a>
-          <a href="#services" className="hover:text-[#e1ba66]">{t('navServices')}</a>
-          <a href="#products" className="hover:text-[#e1ba66]">{t('navProducts')}</a>
-          <a href="#gallery" className="hover:text-[#e1ba66]">Gallery</a>
-          <a href="#contact" className="hover:text-[#e1ba66]">{t('navContact')}</a>
+        <nav className="hidden md:flex items-center gap-1">
+          {navLinks.map(link => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="relative px-4 py-2 text-sm font-medium text-white/70 hover:text-gold-light transition-colors duration-300 group"
+            >
+              {link.label}
+              <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-gradient-to-r from-gold-dark via-gold to-gold-light group-hover:w-3/4 transition-all duration-300" />
+            </a>
+          ))}
         </nav>
 
         {/* Right controls */}
-        <div className="flex items-center gap-3">
-          {/* Download Catalog (desktop) */}
+        <div className="flex items-center gap-2">
+          {/* Download Catalog */}
           <button
             onClick={downloadCatalog}
             disabled={downloading}
-            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e1ba66] text-black font-semibold shadow hover:opacity-95 transition"
+            className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 btn-gold"
             aria-label={t('downloadCatalogButton') || 'Download Catalog'}
           >
-            <AiOutlineDownload />
+            <AiOutlineDownload className="text-base" />
             <span>{downloading ? t('generating') || 'Generating…' : t('downloadCatalogButton')}</span>
           </button>
 
@@ -115,85 +128,113 @@ const Header: React.FC = () => {
           <div className="relative hidden md:block" ref={langRef}>
             <button
               onClick={() => setLangOpen(s => !s)}
-              className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full inline-flex items-center"
+              className="p-2.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all duration-300"
               aria-haspopup="menu"
               aria-expanded={langOpen}
               aria-label="Toggle language menu"
             >
-              <AiOutlineGlobal />
-              <span className="sr-only">Language</span>
+              <AiOutlineGlobal size={16} />
             </button>
 
-            {langOpen && (
-              <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                {LANGS.map((l) => (
-                  <button
-                    key={l.code}
-                    onClick={() => changeLanguage(l.code)}
-                    className={`w-full text-left px-3 py-2 flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-gray-700 ${i18n.language === l.code ? 'font-semibold' : ''}`}
-                  >
-                    <span style={{ fontSize: 18 }}>{l.flag}</span>
-                    <span>{l.label}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {langOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-2 w-44 glass-card overflow-hidden shadow-glass"
+                >
+                  {LANGS.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => changeLanguage(l.code)}
+                      className={`w-full text-left px-4 py-3 flex items-center gap-3 text-sm hover:bg-white/10 transition-colors ${
+                        i18n.language === l.code ? 'text-gold font-semibold' : 'text-white/70'
+                      }`}
+                    >
+                      <span style={{ fontSize: 18 }}>{l.flag}</span>
+                      <span>{l.label}</span>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full transition inline-flex items-center"
+            className="p-2.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 hover:text-gold transition-all duration-300"
             aria-label={t('toggleTheme') || 'Toggle theme'}
           >
-            {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+            {theme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
           </button>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setMobileOpen(s => !s)}
-              className="bg-gray-800 hover:bg-gray-700 text-white p-2 rounded-full"
+              className="p-2.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 transition-all duration-300"
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
-              {mobileOpen ? <FiX /> : <FiMenu />}
+              {mobileOpen ? <FiX size={18} /> : <FiMenu size={18} />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile nav */}
-      {mobileOpen && (
-        <nav className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-          <div className="px-4 py-4 flex flex-col gap-3">
-            <a href="#hero" onClick={() => setMobileOpen(false)} className="py-2">{t('navHome')}</a>
-            <a href="#about" onClick={() => setMobileOpen(false)} className="py-2">{t('navAbout')}</a>
-            <a href="#services" onClick={() => setMobileOpen(false)} className="py-2">{t('navServices')}</a>
-            <a href="#products" onClick={() => setMobileOpen(false)} className="py-2">{t('navProducts')}</a>
-            <a href="#gallery" onClick={() => setMobileOpen(false)} className="py-2">Gallery</a>
-            <a href="#contact" onClick={() => setMobileOpen(false)} className="py-2">{t('navContact')}</a>
-
-            <div className="pt-2">
-              <button onClick={() => { downloadCatalog(); setMobileOpen(false); }} className="w-full px-4 py-2 rounded-full bg-[#e1ba66] text-black font-semibold">
-                {t('downloadCatalogButton')}
-              </button>
-            </div>
-
-            <div className="flex gap-2 mt-2">
-              {LANGS.map((l) => (
-                <button
-                  key={l.code}
-                  onClick={() => { changeLanguage(l.code); setMobileOpen(false); }}
-                  className={`flex-1 px-3 py-2 rounded-md ${i18n.language === l.code ? 'bg-gray-200 dark:bg-gray-700' : 'bg-transparent'}`}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden overflow-hidden bg-gem-dark/95 backdrop-blur-xl border-t border-white/5"
+          >
+            <div className="px-6 py-6 flex flex-col gap-1">
+              {navLinks.map(link => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="py-3 px-3 text-white/70 hover:text-gold-light hover:bg-white/5 rounded-lg transition-all text-lg font-display"
                 >
-                  <span style={{ fontSize: 16, marginRight: 8 }}>{l.flag}</span>{l.label}
-                </button>
+                  {link.label}
+                </a>
               ))}
+
+              <div className="pt-4 mt-2 border-t border-white/5">
+                <button
+                  onClick={() => { downloadCatalog(); setMobileOpen(false); }}
+                  className="w-full py-3 rounded-full btn-gold text-center text-sm"
+                >
+                  {t('downloadCatalogButton')}
+                </button>
+              </div>
+
+              <div className="flex gap-2 mt-4">
+                {LANGS.map((l) => (
+                  <button
+                    key={l.code}
+                    onClick={() => { changeLanguage(l.code); setMobileOpen(false); }}
+                    className={`flex-1 px-3 py-2.5 rounded-lg text-sm transition-all border ${
+                      i18n.language === l.code
+                        ? 'border-gold/30 bg-gold/10 text-gold'
+                        : 'border-white/10 bg-white/5 text-white/60'
+                    }`}
+                  >
+                    <span style={{ fontSize: 16, marginRight: 8 }}>{l.flag}</span>{l.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </nav>
-      )}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

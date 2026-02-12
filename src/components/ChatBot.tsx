@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiMessageSquare, FiX } from 'react-icons/fi';
+import { FiMessageSquare, FiX, FiSend } from 'react-icons/fi';
+import { FaGem } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +18,7 @@ interface QuickReply {
 const quickRepliesInitial: QuickReply[] = [
   { id: 1, questionKey: 'quickReply1Question', answerKey: 'quickReply1Answer' },
   { id: 2, questionKey: 'quickReply2Question', answerKey: 'quickReply2Answer' },
-  { id: 3, questionKey: 'quickReply3Question', answerKey: 'quickReply3Answer' }, // "How can I order?"
+  { id: 3, questionKey: 'quickReply3Question', answerKey: 'quickReply3Answer' },
   { id: 4, questionKey: 'quickReply4Question', answerKey: 'quickReply4Answer' },
 ];
 
@@ -35,28 +36,17 @@ const ChatBot: React.FC = () => {
   const [conversationFlow, setConversationFlow] = useState<'initial' | 'order'>('initial');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const toggleChat = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const toggleChat = () => setIsOpen((prev) => !prev);
 
-  // Extended dynamic reply check function.
   const getDynamicReply = (text: string): string => {
     const lowerText = text.toLowerCase();
-    if (lowerText.includes('order') || lowerText.includes('buy')) {
-      return t('orderReply');
-    } else if (lowerText.includes('hour') || lowerText.includes('time')) {
-      return t('hoursReply');
-    } else if (lowerText.includes('custom') || lowerText.includes('design')) {
-      return t('customReply');
-    } else if (lowerText.includes('gemstone') || lowerText.includes('jewelry')) {
-      return t('gemReply');
-    } else if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('discount') || lowerText.includes('offer')) {
-      return t('priceReply');
-    } else if (lowerText.includes('location') || lowerText.includes('address') || lowerText.includes('where')) {
-      return t('locationReply');
-    } else if (lowerText.includes('contact') || lowerText.includes('help')) {
-      return t('contactReply');
-    }
+    if (lowerText.includes('order') || lowerText.includes('buy')) return t('orderReply');
+    if (lowerText.includes('hour') || lowerText.includes('time')) return t('hoursReply');
+    if (lowerText.includes('custom') || lowerText.includes('design')) return t('customReply');
+    if (lowerText.includes('gemstone') || lowerText.includes('jewelry')) return t('gemReply');
+    if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('discount') || lowerText.includes('offer')) return t('priceReply');
+    if (lowerText.includes('location') || lowerText.includes('address') || lowerText.includes('where')) return t('locationReply');
+    if (lowerText.includes('contact') || lowerText.includes('help')) return t('contactReply');
     return t('genericBotReply');
   };
 
@@ -65,7 +55,6 @@ const ChatBot: React.FC = () => {
     const userMessage: Message = { sender: 'user', text };
     setMessages((prev) => [...prev, userMessage]);
 
-    // If user selects "How can I order?", switch to order flow.
     if (text === t('quickReply3Question')) {
       setConversationFlow('order');
     }
@@ -91,14 +80,23 @@ const ChatBot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Chat Button positioned at bottom-left */}
+      {/* Floating Chat Toggle */}
       <button
         onClick={toggleChat}
-        className="fixed bottom-8 left-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl transition"
+        className="fixed bottom-8 left-8 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg"
+        style={{
+          background: 'linear-gradient(135deg, #d4a853, #c9952a)',
+          boxShadow: '0 4px 20px rgba(212,168,83,0.3)',
+        }}
         title="Chat with us"
       >
-        {isOpen ? <FiX size={24} /> : <FiMessageSquare size={24} />}
+        {isOpen ? <FiX size={22} className="text-gem-dark" /> : <FiMessageSquare size={22} className="text-gem-dark" />}
       </button>
+
+      {/* Pulsing ring */}
+      {!isOpen && (
+        <div className="fixed bottom-8 left-8 z-40 w-14 h-14 rounded-full animate-glow-pulse pointer-events-none" />
+      )}
 
       {/* Chat Box */}
       <AnimatePresence>
@@ -107,43 +105,61 @@ const ChatBot: React.FC = () => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-20 left-8 z-50 w-80 bg-white dark:bg-gray-900 rounded-lg shadow-2xl flex flex-col overflow-hidden"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed bottom-24 left-8 z-50 w-80 rounded-2xl overflow-hidden shadow-2xl border border-white/[0.06]"
+            style={{ background: '#111118' }}
           >
             {/* Header */}
-            <div className="bg-green-500 p-4 flex items-center justify-between">
-              <h3 className="text-white font-bold">{t('chatBotTitle')}</h3>
-              <button onClick={toggleChat} className="text-white">
-                <FiX size={20} />
+            <div className="p-4 flex items-center justify-between border-b border-white/[0.06]"
+              style={{ background: 'linear-gradient(135deg, rgba(212,168,83,0.1), rgba(212,168,83,0.05))' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center">
+                  <FaGem className="text-gem-dark text-sm" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white">{t('chatBotTitle')}</h3>
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-gem" />
+                    <span className="text-[10px] text-white/40">Online</span>
+                  </div>
+                </div>
+              </div>
+              <button onClick={toggleChat} className="text-white/40 hover:text-white transition-colors">
+                <FiX size={18} />
               </button>
             </div>
-            {/* Quick Reply Options */}
-            <div className="p-2 border-b border-gray-200 dark:border-gray-700 flex flex-wrap gap-2">
+
+            {/* Quick Replies */}
+            <div className="p-3 border-b border-white/[0.04] flex flex-wrap gap-1.5">
               {currentQuickReplies.map((reply) => (
                 <button
                   key={reply.id}
                   onClick={() => handleQuickReplyClick(reply)}
-                  className="bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-3 py-1 rounded-full text-sm hover:bg-green-500 hover:text-white transition"
+                  className="px-3 py-1.5 rounded-full text-[11px] border border-white/[0.08] bg-white/[0.03] text-white/60 hover:border-gold/30 hover:text-gold hover:bg-gold/5 transition-all"
                 >
                   {t(reply.questionKey)}
                 </button>
               ))}
             </div>
-            {/* Message Area with scroll */}
-            <div className="flex-1 p-4 overflow-y-auto max-h-64 space-y-2">
+
+            {/* Messages */}
+            <div className="flex-1 p-4 overflow-y-auto max-h-60 space-y-3"
+              style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(212,168,83,0.3) transparent' }}
+            >
               {messages.map((msg, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.2 }}
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`rounded-lg p-2 max-w-xs ${
+                    className={`rounded-2xl px-3.5 py-2.5 max-w-[80%] text-sm ${
                       msg.sender === 'user'
-                        ? 'bg-green-500 text-white'
-                        : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-white'
+                        ? 'bg-gold/20 text-gold-light rounded-br-md'
+                        : 'bg-white/[0.05] text-white/70 rounded-bl-md border border-white/[0.06]'
                     }`}
                   >
                     {msg.text}
@@ -152,21 +168,30 @@ const ChatBot: React.FC = () => {
               ))}
               <div ref={messagesEndRef} />
             </div>
-            {/* Input Area */}
-            <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    sendMessage(input);
-                    setInput('');
-                  }
-                }}
-                placeholder={t('chatBotPlaceholder') || "Type your message..."}
-                className="w-full p-2 border border-gray-300  dark:text-black rounded focus:outline-none focus:ring focus:border-green-500"
-              />
+
+            {/* Input */}
+            <div className="p-3 border-t border-white/[0.06]">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      sendMessage(input);
+                      setInput('');
+                    }
+                  }}
+                  placeholder={t('chatBotPlaceholder') || 'Type your message...'}
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder-white/25 focus:border-gold/30 focus:outline-none transition-colors"
+                />
+                <button
+                  onClick={() => { sendMessage(input); setInput(''); }}
+                  className="w-10 h-10 rounded-xl gold-gradient-bg flex items-center justify-center flex-shrink-0 hover:opacity-90 transition-opacity"
+                >
+                  <FiSend size={14} className="text-gem-dark" />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

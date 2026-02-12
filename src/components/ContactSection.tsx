@@ -1,9 +1,9 @@
-// src/components/ContactSection.tsx
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { MdEmail } from 'react-icons/md';
+import { FaWhatsapp } from 'react-icons/fa';
 
 type FormState = {
   name: string;
@@ -46,7 +46,6 @@ const ContactSection: React.FC = () => {
 
     setLoading(true);
     try {
-      // Try POST to /api/contact if available
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,12 +56,10 @@ const ContactSection: React.FC = () => {
         setStatus({ type: 'success', message: t('contactReply') || 'Thanks — we received your message!' });
         setForm(initialForm);
       } else {
-        // fallback to mailto
         tryMailToFallback();
         setStatus({ type: 'success', message: t('contactReply') || 'Message prepared in your mail client.' });
       }
     } catch (err) {
-      // network error -> mailto fallback
       tryMailToFallback();
       setStatus({ type: 'success', message: t('contactReply') || 'Message prepared in your mail client.' });
     } finally {
@@ -71,48 +68,72 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <motion.section
-      id="contact"
-      className="py-20 bg-white dark:bg-gray-800"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8 }}
-    >
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-8 dark:text-white">{t('contactTitle')}</h2>
+    <section id="contact" className="relative py-24 md:py-32 bg-gem-dark overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 right-0 w-96 h-96 bg-gold/[0.03] rounded-full blur-[150px] pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left column: contact details & form */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 dark:text-white">
-              <HiOutlineLocationMarker size={32} className="text-[#e1ba66]" />
-              <div>
-                <h3 className="text-2xl font-semibold">{t('Address')}</h3>
-                <p className="text-lg">{t('contactAddress')}</p>
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="text-xs tracking-[0.3em] uppercase text-gold/60 font-medium">Get In Touch</span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mt-3 mb-4 gold-gradient-text">
+            {t('contactTitle')}
+          </h2>
+          <div className="section-divider" />
+        </motion.div>
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* Left: Contact Info + Form */}
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Contact cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="glass-card p-5 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gold/10 border border-gold/20 flex-shrink-0">
+                  <HiOutlineLocationMarker className="text-gold" size={20} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-adaptive-primary mb-1">{t('Address')}</h4>
+                  <p className="text-xs text-adaptive-secondary leading-relaxed">{t('contactAddress')}</p>
+                </div>
+              </div>
+              <div className="glass-card p-5 flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gold/10 border border-gold/20 flex-shrink-0">
+                  <MdEmail className="text-gold" size={20} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-adaptive-primary mb-1">Email</h4>
+                  <a href={`mailto:${t('contactEmail')}`} className="text-xs text-gold hover:text-gold-light transition-colors">
+                    {t('contactEmail')}
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 dark:text-white">
-              <MdEmail size={28} className="text-[#e1ba66]" />
-              <div>
-                <h3 className="text-2xl font-semibold">{t('contactTitle') || 'Contact'}</h3>
-                <a href={`mailto:${t('contactEmail')}`} className="text-blue-400 hover:underline">
-                  {t('contactEmail')}
-                </a>
-              </div>
-            </div>
+            <p className="text-adaptive-secondary text-sm leading-relaxed">
+              {t('contactMessage') || 'Feel free to reach out to us for any inquiries or orders.'}
+            </p>
 
-            <p className="text-lg dark:text-white">{t('contactMessage') || 'Feel free to reach out to us for any inquiries or orders.'}</p>
-
-            <form onSubmit={onSubmit} className="space-y-4 bg-gray-50 dark:bg-gray-700 rounded-lg p-6 shadow-md">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Form */}
+            <form onSubmit={onSubmit} className="glass-card p-6 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   name="name"
                   value={form.name}
                   onChange={onChange}
                   placeholder={t('yourName') || 'Your name'}
-                  className="px-3 py-2 rounded-md w-full"
+                  className="w-full px-4 py-3 rounded-xl bg-adaptive-card border border-adaptive-border text-adaptive-primary text-sm placeholder-adaptive-secondary/50 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-all"
                   required
                 />
                 <input
@@ -120,8 +141,8 @@ const ContactSection: React.FC = () => {
                   value={form.email}
                   onChange={onChange}
                   placeholder={t('yourEmail') || 'you@example.com'}
-                  className="px-3 py-2 rounded-md w-full"
                   type="email"
+                  className="w-full px-4 py-3 rounded-xl bg-adaptive-card border border-adaptive-border text-adaptive-primary text-sm placeholder-adaptive-secondary/50 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-all"
                   required
                 />
               </div>
@@ -131,7 +152,7 @@ const ContactSection: React.FC = () => {
                 value={form.message}
                 onChange={onChange}
                 placeholder={t('yourMessage') || 'Message'}
-                className="w-full px-3 py-2 rounded-md min-h-[120px]"
+                className="w-full px-4 py-3 rounded-xl bg-adaptive-card border border-adaptive-border text-adaptive-primary text-sm placeholder-adaptive-secondary/50 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-all min-h-[130px] resize-none"
                 required
               />
 
@@ -139,58 +160,80 @@ const ContactSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 rounded-full bg-[#e1ba66] text-black font-semibold shadow"
+                  className="btn-gold text-sm disabled:opacity-50"
                 >
                   {loading ? t('generating') || 'Sending…' : t('getInTouchButton') || 'Send Message'}
                 </button>
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {t('hoursReply') || 'Open: 9 AM - 9 PM'}
-                </div>
+                <span className="text-xs text-adaptive-secondary/60">{t('hoursReply') || 'Open: 9 AM - 9 PM'}</span>
               </div>
 
               {status && (
-                <div className={`mt-2 p-3 rounded ${status.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+                <div className={`mt-2 p-3 rounded-xl text-sm ${
+                  status.type === 'success'
+                    ? 'bg-emerald-gem/10 text-emerald-gem border border-emerald-gem/20'
+                    : 'bg-ruby-gem/10 text-ruby-gem border border-ruby-gem/20'
+                }`}>
                   {status.message}
                 </div>
               )}
             </form>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Map + quick contact actions */}
-          <div className="space-y-4">
-            <div className="rounded overflow-hidden shadow-lg">
+          {/* Right: Map + Actions */}
+          <motion.div
+            className="space-y-6"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            {/* Map */}
+            <div className="rounded-2xl overflow-hidden border border-white/[0.06] shadow-glass">
               <iframe
                 title="Google Maps - Elite Gems Private Limited"
                 src="https://www.google.com/maps?q=34.004689,71.565888&hl=en&z=15&output=embed"
                 width="100%"
-                height="360"
-                className="border-0"
+                height="380"
+                className="border-0 grayscale contrast-[1.1] opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
 
+            {/* Action buttons */}
             <div className="grid grid-cols-1 gap-3">
               <a
-                href={`https://wa.me/+923339134320`}
+                href="https://wa.me/+923339134320"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-3 px-4 py-3 rounded-lg bg-green-600 text-white font-semibold shadow"
+                className="flex items-center gap-4 px-6 py-4 rounded-xl glass-card-hover border border-white/[0.06] hover:border-emerald-gem/30 group"
               >
-                WhatsApp: {t('contactPhone')}
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-gem/10 border border-emerald-gem/20">
+                  <FaWhatsapp className="text-emerald-gem" size={18} />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-adaptive-primary group-hover:text-emerald-gem transition-colors">WhatsApp</div>
+                  <div className="text-xs text-adaptive-secondary">{t('contactPhone')}</div>
+                </div>
               </a>
               <a
                 href={`mailto:${t('contactEmail')}`}
-                className="inline-flex items-center gap-3 px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 text-black dark:text-white font-semibold shadow"
+                className="flex items-center gap-4 px-6 py-4 rounded-xl glass-card-hover border border-white/[0.06] hover:border-gold/30 group"
               >
-                {t('contactEmail')}
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gold/10 border border-gold/20">
+                  <MdEmail className="text-gold" size={18} />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-adaptive-primary group-hover:text-gold transition-colors">Email</div>
+                  <div className="text-xs text-adaptive-secondary">{t('contactEmail')}</div>
+                </div>
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

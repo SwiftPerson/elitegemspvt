@@ -1,15 +1,15 @@
-// src/components/HeroSection.tsx
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { FaChevronDown } from 'react-icons/fa';
 
 const HeroSection: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="hero" className="relative h-[78vh] md:h-[84vh] flex items-center overflow-hidden">
-      {/* Prefer video background if present */}
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden bg-gem-dark">
+      {/* Video background */}
       <video
         autoPlay
         loop
@@ -22,35 +22,99 @@ const HeroSection: React.FC = () => {
         <source src="/images/hero-video.mp4" type="video/mp4" />
       </video>
 
-      {/* Dark overlay for contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/50" />
+      {/* Multi-layer overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gem-dark/80 via-gem-dark/40 to-gem-dark/90" />
+      <div className="absolute inset-0 bg-gradient-to-r from-gem-dark/60 via-transparent to-gem-dark/60" />
 
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-16 hidden lg:block pointer-events-none">
+        <motion.div
+          className="w-32 h-32 rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(212,168,83,0.4) 0%, transparent 70%)',
+          }}
+          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.3, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
+      <div className="absolute bottom-32 left-12 hidden lg:block pointer-events-none">
+        <motion.div
+          className="w-20 h-20 rounded-full opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(240,210,122,0.3) 0%, transparent 70%)',
+          }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
+      </div>
+
+      {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl text-center mx-auto text-white">
-          <motion.h2 initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }} className="text-4xl md:text-5xl font-extrabold leading-tight">
-            {t('heroTitle')}
-          </motion.h2>
+        <div className="max-w-3xl text-center mx-auto">
+          {/* Subtitle tag */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-block mb-6 px-5 py-2 rounded-full border border-gold/20 bg-gold/5"
+          >
+            <span className="text-xs tracking-[0.25em] uppercase text-gold-light font-medium">
+              Premium Gemstones & Craftsmanship
+            </span>
+          </motion.div>
 
-          <motion.p initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.9 }} className="mt-4 text-lg md:text-xl text-gray-100/90">
+          {/* Main heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6"
+          >
+            <span className="gold-gradient-text">{t('heroTitle')}</span>
+          </motion.h1>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6 }}
+            className="text-base sm:text-lg md:text-xl text-white/60 max-w-xl mx-auto leading-relaxed mb-10"
+          >
             {t('heroSubtitle')}
           </motion.p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="#products" className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#e1ba66] text-black font-semibold shadow-lg transform hover:-translate-y-0.5 transition">
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link href="#products" className="btn-gold inline-flex items-center justify-center gap-2 text-sm">
               {t('heroLearnMore')}
             </Link>
-
-            <button onClick={() => window.location.href = '/api/catalog'} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white hover:opacity-95">
+            <button
+              onClick={() => window.location.href = '/api/catalog'}
+              className="btn-outline-gold inline-flex items-center justify-center gap-2 text-sm"
+            >
               {t('downloadCatalogButton')}
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Decorative gem accent — still uses the accent color */}
-      <div className="pointer-events-none absolute right-8 top-20 hidden lg:block">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#e1ba66] to-yellow-400 shadow-2xl opacity-90 animate-pulse" />
-      </div>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">Scroll</span>
+        <FaChevronDown className="text-gold/40 text-xs" />
+      </motion.div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gem-dark to-transparent pointer-events-none" />
     </section>
   );
 };
