@@ -28,36 +28,6 @@ const Preloader: React.FC = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.6, ease: 'easeInOut' } }}
         >
-          {/* Rotating ring behind the gem */}
-          <motion.div
-            className="absolute"
-            style={{
-              width: 140,
-              height: 140,
-              borderRadius: '50%',
-              border: '2px solid transparent',
-              borderTopColor: '#d4a853',
-              borderRightColor: 'rgba(212,168,83,0.3)',
-            }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-          />
-
-          {/* Second slower ring */}
-          <motion.div
-            className="absolute"
-            style={{
-              width: 170,
-              height: 170,
-              borderRadius: '50%',
-              border: '1px solid transparent',
-              borderBottomColor: 'rgba(212,168,83,0.2)',
-              borderLeftColor: 'rgba(212,168,83,0.1)',
-            }}
-            animate={{ rotate: -360 }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
-          />
-
           {/* Gem Icon with glow */}
           <motion.div
             className="relative z-10 mb-6"
