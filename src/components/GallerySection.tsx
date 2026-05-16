@@ -2,12 +2,12 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { FiX, FiInfo } from 'react-icons/fi';
-import { gemCategories, getProductsByCategory, Product } from '../data/gemstones';
+import { gemCategories, getProductsByCategory, GemProduct } from '../data/gemstones';
 
 const GallerySection: React.FC = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<GemProduct | null>(null);
 
   const items = useMemo(() => getProductsByCategory(activeCategory), [activeCategory]);
   const categories = gemCategories;
