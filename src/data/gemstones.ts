@@ -51,8 +51,8 @@ export const gemCategories: GemCategory[] = [
         color: '#e8e8e8',
         products: [
             { id: 'dq-necklace', name: 'Diamond Quartz Necklace', description: 'Elegant necklaces that embody timeless sophistication.', image: '/images/dqnb.jpg', type: 'Necklace' },
-            { id: 'dq-necklacelg', name: 'Diamond Quartz Necklace large size', description: 'Elegant necklaces that embody timeless sophistication.', image: '/images/dqnvb.jpg', type: 'Necklace' },
-            { id: 'dq-necklacesidedrill', name: 'Diamond Quartz leaf Necklace', description: 'Elegant side drill necklaces that embody timeless sophistication.', image: '/images/dqsdn.jpg', type: 'Necklace' },
+            { id: 'dq-necklacelg', name: 'Diamond Quartz Necklace large size', description: 'Elegant necklaces that embody timeless sophistication large and bold.', image: '/images/dqnvb.jpg', type: 'Necklace' },
+            { id: 'dq-necklacesidedrill', name: 'Diamond Quartz leaf Necklace', description: 'Elegant side drill leaf style necklace .', image: '/images/dqsdn.jpg', type: 'Necklace' },
 
         ],
     },
@@ -62,7 +62,7 @@ export const gemCategories: GemCategory[] = [
         color: '#2dd4a0',
         products: [
             { id: 'em-necklace', name: 'Emerald Necklace', description: 'Rich green emerald necklace.', image: '/images/efn.jpg', type: 'Necklace' },
-            { id: 'em-set', name: 'Emerald set', description: 'Deep green emerald set in a classic setting.', image: '/images/ees.jpg', type: 'Pendant' },
+            { id: 'em-set', name: 'Emerald earrings and pendant set', description: 'Deep green emerald earrings and pendant set in a classic setting.', image: '/images/ees.jpg', type: 'Pendant' },
             { id: 'em-beads', name: 'Emerald Beads necklace', description: ' emerald beads necklace facet cut.', image: '/images/efbn.jpg', type: 'Necklace' },
             { id: 'em-tumble', name: 'Emerald tumble necklace', description: ' emerald beads necklace tumble cut.', image: '/images/etn.jpg', type: 'Necklace' },
         ],
@@ -101,17 +101,17 @@ export const gemCategories: GemCategory[] = [
         products: [
             { id: 'bt-loose', name: 'Black Tourmaline', description: 'black tourmaline necklace.', image: '/images/btneck.jpg', type: 'Necklace' },
         ],
-        // },
-        // {
-        //     id: 'topaz',
-        //     name: 'Topaz',
-        //     color: '#fbbf24',
-        //     products: [
-        //         { id: 'tz-pendant', name: 'Topaz Pendant', description: 'Warm golden topaz pendant for a radiant look.', image: '/images/pendant.jpeg', type: 'Pendant' },
-        //         { id: 'tz-necklace', name: 'Topaz Necklace', description: 'Glowing topaz necklace crafted with precision.', image: '/images/1.jpeg', type: 'Necklace' },
-        //     ],
+    },
+    // {
+    //     id: 'topaz',
+    //     name: 'Topaz',
+    //     color: '#fbbf24',
+    //     products: [
+    //         { id: 'tz-pendant', name: 'Topaz Pendant', description: 'Warm golden topaz pendant for a radiant look.', image: '/images/pendant.jpeg', type: 'Pendant' },
+    //         { id: 'tz-necklace', name: 'Topaz Necklace', description: 'Glowing topaz necklace crafted with precision.', image: '/images/1.jpeg', type: 'Necklace' },
+    //     ],
 
-    },//end of list
+    // },
 ];
 
 /**

@@ -1,14 +1,28 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { gemCategories, getProductsByCategory } from '../data/gemstones';
+import { FiX, FiInfo } from 'react-icons/fi';
+import { gemCategories, getProductsByCategory, Product } from '../data/gemstones';
 
 const GallerySection: React.FC = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const items = useMemo(() => getProductsByCategory(activeCategory), [activeCategory]);
   const categories = gemCategories;
+
+  // Prevent scroll when lightbox is open
+  useEffect(() => {
+    if (selectedProduct) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProduct]);
 
   // Assign varied grid spans for masonry look
   const getSpan = (index: number): string => {
@@ -84,6 +98,7 @@ const GallerySection: React.FC = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
+                  onClick={() => setSelectedProduct(item)}
                 >
                   <img
                     src={item.image}
@@ -99,7 +114,10 @@ const GallerySection: React.FC = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                     <div className="glass-card px-4 py-3">
                       <p className="text-sm font-medium text-white">{item.name}</p>
-                      <p className="text-xs text-white/50 mt-1">{item.type}</p>
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-xs text-white/50">{item.type}</p>
+                        <span className="text-[10px] text-gold/80 font-medium uppercase tracking-wider">View Details</span>
+                      </div>
                     </div>
                   </div>
 
@@ -117,8 +135,100 @@ const GallerySection: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Lightbox / Detail Modal */}
+      <AnimatePresence>
+        {selectedProduct && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Backdrop */}
+            <motion.div
+              className="absolute inset-0 bg-gem-darker/95 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedProduct(null)}
+            />
+
+            {/* Modal Content */}
+            <motion.div
+              className="relative w-full max-w-5xl max-h-full overflow-hidden glass-card border border-white/10 rounded-2xl flex flex-col md:flex-row shadow-2xl"
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Image side */}
+              <div className="w-full md:w-2/3 h-[40vh] md:h-auto relative bg-black/20">
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-full object-contain md:object-cover"
+                />
+                
+                {/* Close Button Mobile */}
+                <button
+                  onClick={() => setSelectedProduct(null)}
+                  className="absolute top-4 right-4 md:hidden w-10 h-10 rounded-full bg-gem-dark/60 text-white flex items-center justify-center backdrop-blur-md border border-white/10"
+                >
+                  <FiX size={20} />
+                </button>
+              </div>
+
+              {/* Info side */}
+              <div className="w-full md:w-1/3 p-6 md:p-10 flex flex-col justify-center bg-adaptive-glass border-t md:border-t-0 md:border-l border-white/5">
+                {/* Close Button Desktop */}
+                <button
+                  onClick={() => setSelectedProduct(null)}
+                  className="hidden md:flex absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 text-adaptive-secondary items-center justify-center hover:bg-gold/10 hover:text-gold hover:border-gold/20 border border-white/10 transition-all duration-300"
+                >
+                  <FiX size={20} />
+                </button>
+
+                <div className="space-y-6">
+                  <div>
+                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-[10px] font-bold text-gold uppercase tracking-[0.1em] mb-4">
+                      <FiInfo size={10} />
+                      {selectedProduct.type}
+                    </span>
+                    <h3 className="font-display text-3xl md:text-4xl font-bold gold-gradient-text leading-tight">
+                      {selectedProduct.name}
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-adaptive-secondary text-sm md:text-base leading-relaxed">
+                      {selectedProduct.description}
+                    </p>
+                    
+                    <div className="pt-6 border-t border-white/5">
+                      <p className="text-xs text-adaptive-secondary/60 mb-4 uppercase tracking-widest">Inquiries & Orders</p>
+                      <div className="flex flex-wrap gap-3">
+                        <a 
+                          href="https://wa.me/+923339134320" 
+                          target="_blank" 
+                          rel="noreferrer"
+                          className="btn-gold text-xs px-6 py-3"
+                        >
+                          Enquire via WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
 export default GallerySection;
+
