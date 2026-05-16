@@ -380,9 +380,7 @@ function buildContactPage(doc: Doc) {
   const contactInfo = [
     { label: 'Address', value: 'Shop #20, MC Plaza, Namak Mandi, Peshawar, Pakistan' },
     { label: 'WhatsApp', value: '+92 333 9134320' },
-    { label: 'Email', value: 'elitegems@protonmail.com' },
-    { label: 'Etsy', value: 'elitegemsprivate.etsy.com' },
-    { label: 'eBay', value: 'ebay.com/usr/elitegems_pvt' },
+    { label: 'Email', value: 'khalidminarals@gmail.com' },
   ];
 
   let contactY = 270;

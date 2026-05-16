@@ -63,7 +63,7 @@ function buildKnowledgeBase(t: (key: string) => string): KnowledgeEntry[] {
     // ══════ COMPANY INFO ══════
     {
       keywords: ['about', 'who are you', 'company', 'elite gems', 'tell me about', 'what is elite'],
-      response: "Elite Gems Pvt Ltd is a premier gemstone and jewelry company based in Peshawar, Pakistan. 💎\n\nWith decades of experience, we specialize in:\n• Sourcing premium gemstones directly from mines\n• Expert gemstone processing (drilling, faceting, polishing, bead-making)\n• Crafting bespoke jewelry pieces\n\nWe serve customers worldwide through our shop, Etsy, eBay, WhatsApp, and WeChat.",
+      response: "Elite Gems Pvt Ltd is a premier gemstone and jewelry company based in Peshawar, Pakistan. 💎\n\nWith decades of experience, we specialize in:\n• Sourcing premium gemstones directly from mines\n• Expert gemstone processing (drilling, faceting, polishing, bead-making)\n• Crafting bespoke jewelry pieces\n\nWe serve customers worldwide through our shop, WhatsApp, and WeChat.",
       category: 'about',
       priority: 5,
       followUps: ['Where are you located?', 'What services do you offer?', 'What gemstones do you sell?'],
@@ -90,7 +90,7 @@ function buildKnowledgeBase(t: (key: string) => string): KnowledgeEntry[] {
     // ══════ CONTACT ══════
     {
       keywords: ['contact', 'reach', 'phone', 'call', 'email', 'whatsapp', 'wechat', 'chat', 'message', 'talk'],
-      response: "📞 Here's how to reach us:\n\n• **WhatsApp**: +92 333 9134320\n• **Email**: elitegems@protonmail.com\n• **WeChat**: Scan the QR code (click the green button)\n• **Visit**: Shop #20, MC Plaza, Namak Mandi, Peshawar\n\nFeel free to contact us for inquiries, custom orders, or consultations!",
+      response: "📞 Here's how to reach us:\n\n• **WhatsApp**: +92 333 9134320\n• **Email**: khalidminarals@gmail.com\n• **WeChat**: Scan the QR code (click the green button)\n• **Visit**: Shop #20, MC Plaza, Namak Mandi, Peshawar\n\nFeel free to contact us for inquiries, custom orders, or consultations!",
       category: 'contact',
       priority: 8,
       followUps: ['How can I place an order?', 'Do you offer custom jewelry?'],
@@ -99,7 +99,7 @@ function buildKnowledgeBase(t: (key: string) => string): KnowledgeEntry[] {
     // ══════ ORDERING ══════
     {
       keywords: ['order', 'buy', 'purchase', 'how to order', 'place order', 'checkout', 'cart'],
-      response: "🛒 You can place an order through multiple channels:\n\n1. **WhatsApp**: Message us at +92 333 9134320\n2. **Etsy**: Visit elitegemsprivate.etsy.com\n3. **eBay**: Visit ebay.com/usr/elitegems_pvt\n4. **WeChat**: Scan our QR code\n5. **In-Person**: Visit our Peshawar shop\n\nSimply tell us what you're looking for and we'll guide you through the process!",
+      response: "🛒 You can place an order through multiple channels:\n\n1. **WhatsApp**: Message us at +92 333 9134320\n2. **WeChat**: Scan our QR code\n3. **In-Person**: Visit our Peshawar shop\n\nSimply tell us what you're looking for and we'll guide you through the process!",
       category: 'ordering',
       priority: 9,
       followUps: ['Do you ship internationally?', 'What payment methods do you accept?', 'What gemstones do you have?'],
@@ -296,7 +296,7 @@ function buildKnowledgeBase(t: (key: string) => string): KnowledgeEntry[] {
     // ══════ PAYMENT ══════
     {
       keywords: ['payment', 'pay', 'money', 'transfer', 'bank', 'paypal', 'card', 'credit', 'method'],
-      response: "💳 We accept multiple payment methods:\n\n• Bank Transfer\n• PayPal\n• Payment via Etsy/eBay checkout\n• Cash on visit\n• Western Union / MoneyGram for international\n\nContact us to arrange payment for your order!",
+      response: "💳 We accept multiple payment methods:\n\n• Bank Transfer\n• PayPal\n• Cash on visit\n• Western Union / MoneyGram for international\n\nContact us to arrange payment for your order!",
       category: 'payment',
       priority: 8,
       followUps: ['How can I place an order?', 'Do you offer COD?'],
@@ -311,14 +311,6 @@ function buildKnowledgeBase(t: (key: string) => string): KnowledgeEntry[] {
       followUps: ['How do I contact you?', 'What is your refund process?'],
     },
 
-    // ══════ ETSY / EBAY ══════
-    {
-      keywords: ['etsy', 'ebay', 'online', 'website', 'marketplace'],
-      response: "🌐 Find us on major marketplaces:\n\n• **Etsy**: elitegemsprivate.etsy.com\n• **eBay**: ebay.com/usr/elitegems_pvt\n\nBrowse our collections, read reviews, and order with buyer protection!",
-      category: 'marketplace',
-      priority: 7,
-      followUps: ['How can I place a direct order?', 'Do you offer better prices direct?'],
-    },
 
     // ══════ CATALOG / PDF ══════
     {
@@ -466,7 +458,7 @@ const ChatBot: React.FC = () => {
         responseText = match.response;
         suggestions = match.followUps || [];
       } else {
-        responseText = "I appreciate your question! 😊\n\nI don't have a specific answer for that, but I'd love to help. You can:\n\n• Ask me about our gemstones, services, or ordering process\n• Contact us directly on WhatsApp at +92 333 9134320\n• Email us at elitegems@protonmail.com\n\nOr try one of the suggestions below!";
+        responseText = "I appreciate your question! 😊\n\nI don't have a specific answer for that, but I'd love to help. You can:\n\n• Ask me about our gemstones, services, or ordering process\n• Contact us directly on WhatsApp at +92 333 9134320\n• Email us at khalidminarals@gmail.com\n\nOr try one of the suggestions below!";
         suggestions = defaultSuggestions;
       }
 

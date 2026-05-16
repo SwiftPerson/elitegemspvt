@@ -89,7 +89,7 @@ const resources = {
 
       contactTitle: "Contact Us",
       contactAddress: "Shop #20, MC Plaza, Namak Mandi, Peshawar, Pakistan",
-      contactEmail: "elitegems@protonmail.com",
+      contactEmail: "khalidminarals@gmail.com",
       contactPhone: "+92 333 9134320",
       Address: "Address",
       footerText: "© {{year}} Elite Gems. All Rights Reserved.",
@@ -215,7 +215,7 @@ const resources = {
 
       contactTitle: "联系我们",
       contactAddress: "巴基斯坦白沙瓦 Namak Mandi, MC Plaza 20号店",
-      contactEmail: "elitegems@protonmail.com",
+      contactEmail: "khalidminarals@gmail.com",
       contactPhone: "+92 333 9134320",
       Address: "地址",
       footerText: "© {{year}} Elite Gems。版权所有。",

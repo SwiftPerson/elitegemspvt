@@ -32,7 +32,7 @@ const ContactSection: React.FC = () => {
   const tryMailToFallback = () => {
     const subject = encodeURIComponent(`Contact: ${form.name}`);
     const body = encodeURIComponent(`${form.message}\n\nFrom: ${form.name} <${form.email}>`);
-    window.location.href = `mailto:elitegems@protonmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:khalidminarals@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const onSubmit = async (e: React.FormEvent) => {

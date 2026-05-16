@@ -35,10 +35,10 @@ const Contact: NextPage = () => {
               <p>
                 Email:{" "}
                 <a
-                  href="mailto:elitegems@protonmail.com"
+                  href="mailto:khalidminarals@gmail.com"
                   className="text-blue-600 hover:underline"
                 >
-                  elitegems@protonmail.com
+                  khalidminarals@gmail.com
                 </a>
               </p>
             </div>

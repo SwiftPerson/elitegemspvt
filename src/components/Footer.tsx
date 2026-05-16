@@ -16,8 +16,6 @@ const social = [
   { id: 'facebook', href: '#', icon: FaFacebookF, label: 'Facebook' },
   { id: 'instagram', href: '#', icon: FaInstagram, label: 'Instagram' },
   { id: 'twitter', href: '#', icon: FaTwitter, label: 'Twitter' },
-  { id: 'etsy', href: 'https://elitegemsprivate.etsy.com/', icon: FaEtsy, label: 'Etsy' },
-  { id: 'ebay', href: 'https://ebay.com/usr/elitegems_pvt', icon: FaEbay, label: 'eBay' },
   { id: 'shopify', href: '#', icon: FaShopify, label: 'Shopify' },
 ];
 
@@ -35,7 +33,7 @@ const Footer: React.FC = () => {
     }
     const subject = encodeURIComponent('Subscribe: Elite Gems Newsletter');
     const body = encodeURIComponent(`Please subscribe ${email} to the Elite Gems newsletter.`);
-    window.location.href = `mailto:elitegems@protonmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:khalidminarals@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const year = new Date().getFullYear();
@@ -64,8 +62,8 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <span className="text-adaptive-primary/80 font-medium">Email:</span>{' '}
-                <a href="mailto:elitegems@protonmail.com" className="text-gold/70 hover:text-gold transition-colors">
-                  elitegems@protonmail.com
+                <a href="mailto:khalidminarals@gmail.com" className="text-gold/70 hover:text-gold transition-colors">
+                  khalidminarals@gmail.com
                 </a>
               </div>
               <div>
